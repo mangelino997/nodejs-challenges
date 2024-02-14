@@ -1,4 +1,4 @@
-import Server from '../server/server'; //
+import Server from '../server/server'; 
 
 describe('Server', () => {
     it('should create a server instance', () => {

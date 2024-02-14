@@ -31,7 +31,7 @@
     "extends": "@commitlint/config-conventional"
   },
   "lint-staged": {
-		"*.ts": ""
+		"*.js": ""
 	},
 	"husky": {
 		"hooks": {
