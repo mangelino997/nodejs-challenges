@@ -1,6 +1,6 @@
 import Server from './server/server';
 
-const PORT = 3000;
+const PORT = 3002;
 
 const server = Server.init(PORT);
 

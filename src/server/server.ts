@@ -1,5 +1,6 @@
 import express = require('express');
 import cookieParser = require('cookie-parser');
+import cors = require('cors');
 import termsRoutes from '../routes/termsRoutes';
 
 export default class Server {
@@ -20,7 +21,10 @@ export default class Server {
     }
 
     private config(): void {
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
+        this.app.use(cors());
     }
     
     private routes(): void {
