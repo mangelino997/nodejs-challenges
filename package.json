@@ -30,6 +30,14 @@
   "commitlint": {
     "extends": "@commitlint/config-conventional"
   },
+  "lint-staged": {
+		"*.ts": ""
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
   "dependencies": {
     "express": "^4.18.2"
   }
