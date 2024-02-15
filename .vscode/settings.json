@@ -1,6 +1,6 @@
 {
   // Prevent editor formatting on save for certain file types
-  "editor.formatOnSave": true,
+  // "editor.formatOnSave": true,
   "typescript.validate.enable": true,
   "typescript.suggestionActions.enabled": false,
   "[javascript]": {
@@ -11,16 +11,16 @@
   },
   // Configure eslint to report + fix errors for correct file types
   "editor.formatOnPaste": true,
-  "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-    "javascript",
-    {
-      "language": "javascript",
-      "autoFix": true
-    },
-    {
-      "language": "typescript",
-      "autoFix": true
-    }
-  ]
+  // "eslint.autoFixOnSave": true,
+  // "eslint.validate": [
+  //   "javascript",
+  //   {
+  //     "language": "javascript",
+  //     "autoFix": true
+  //   },
+  //   {
+  //     "language": "typescript",
+  //     "autoFix": true
+  //   }
+  // ]
 }
