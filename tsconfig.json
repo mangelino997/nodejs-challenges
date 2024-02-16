@@ -10,7 +10,10 @@
     "strictFunctionTypes": true,
     "alwaysStrict": true,
     "removeComments": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "types": [
+      "jest"
+    ]
   },
   "include": [
     "src/**/*"
