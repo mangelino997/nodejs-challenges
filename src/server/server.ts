@@ -2,6 +2,7 @@ import express = require('express');
 import cookieParser = require('cookie-parser');
 import cors = require('cors');
 import termsRoutes from '../routes/termsRoutes';
+import airlineRoutes from '../routes/airlineRoutes';
 
 export default class Server {
     public app: express.Application;
@@ -22,12 +23,13 @@ export default class Server {
 
     private config(): void {
         this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(express.urlencoded({ extended: false }));
         this.app.use(cookieParser());
         this.app.use(cors());
     }
     
     private routes(): void {
         this.app.use('/terms/', termsRoutes);
+        this.app.use('/airline', airlineRoutes);
     }
 }
