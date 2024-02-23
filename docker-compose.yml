@@ -4,21 +4,30 @@ volumes:
   node_modules:
 
 services:
-  node-ch-dev:
-    container_name: node-challenges
+  nodechdev:
     restart: unless-stopped
     build:
       context: .
       target: dev
       dockerfile: Dockerfile
+    deploy:
+      mode: replicated
+      replicas: 3
+      update_config:
+        delay: 1s
     ports:
-      - 3002:3002
+      - :3002
+    mem_limit: 2000m
     volumes:
       - .:/app 
       - node_modules:/app/node_modules/
-    networks:
-      - node-ch-network
-networks:
-  node-ch-network:
-    driver: bridge
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - nodechdev
+
 

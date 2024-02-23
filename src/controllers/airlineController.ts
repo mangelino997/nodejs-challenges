@@ -88,7 +88,7 @@ class AirlineController {
                 const element = flights[index];
                 if(element?.[properties.AIRLINE]?.includes(q?.name?.trim())) counter++;
             }
-            res.status(200).send(String(counter));
+            res.status(200).send({counter: String(counter), node: process.env.HOSTNAME});
         } catch (error) {
             const errorMsg = error as Error;
             console.log('ERROR ', errorMsg.message);

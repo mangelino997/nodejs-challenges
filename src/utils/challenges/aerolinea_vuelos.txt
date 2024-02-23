@@ -8,7 +8,8 @@ Objetivos:
 1. Crear endpoint tipo GET que me devuelva la cantidad de vuelos realizados por "xxxx" modelo de avión.
   El proceso debe ser eficiente, demostrar dos alternativas.
 2. Levantar un docker-compose que muestre los recursos utilizados en ambas alternativas, limitaremos 
-  la memoria del contenedor a 1GB: 1000mm
+  la memoria del contenedor a 1GB: 1000m
+2.b. Definir 3 replicas y un Load Balancer para distribuir tráfico (escalar horizontalmente).
 3. Aplicar Bull Queue, Redis y Bull Board para visualizar las colas en proceso.
 4. Crear endpoint para visualizar analíticas
   - Cantidad de vuelos por avión 
