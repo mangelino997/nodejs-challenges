@@ -1,10 +1,11 @@
 import fs = require('fs');
 import path = require('path');
 import csvParser = require('csv-parser');
-// import es = require('event-stream');
 import { Request, Response } from 'express';
 import { Readable } from 'stream';
 import { properties } from '../enum/airline.enum';
+import { flight } from '../interfaces/airline';
+import { flightsAndPassengers } from '../analytics/flightsAndPassengersByDate';
 
 const PATH_FILE = path.join(__dirname, '../../src/utils/csv/airline_data.csv');
 
@@ -12,7 +13,7 @@ interface queryParams{
   name?: string;
 }
 
-const flights: any[] = [];
+const flights: flight[] = [];
 class AirlineController {
   
     constructor() {
@@ -40,13 +41,10 @@ class AirlineController {
         });
     }
 
-    private formaObject(obj: { [name: string]: string}){
-        // Obtener las claves y los valores del objeto original
-        const values: string = Object.values(obj)[0];
-
-        // Dividir los valores por el delimitador ";"
-        const splitedValues = values.split(';');
-        // Crear un nuevo objeto con las propiedades ordenadas
+    private formaObject(obj: { [name: string]: string}): flight{
+        const values: string = Object.values(obj)[0]; // Obtener las claves y los valores del objeto original
+        const splitedValues = values.split(';'); // Dividir los valores por el delimitador ";"
+        
         return  {
             [properties.DATE_UTC]: splitedValues[0],
             [properties.HOUR_UTC]: splitedValues[1],
@@ -55,29 +53,9 @@ class AirlineController {
             [properties.ORIGIN_DESTINATION]: splitedValues[6],
             [properties.AIRLINE]: splitedValues[7],
             [properties.AIRSHIP]: splitedValues[8],
-            [properties.PASSENGERS]: splitedValues[9],
+            [properties.PASSENGERS]: Number(splitedValues[9]),
         };
     }
-    // private initializeData() {
-    //     fs.createReadStream(PATH_FILE, 'utf8')
-    //         .pipe(es.split())
-    //         .on('data', (data: string) => {
-    //             console.log(Buffer.byteLength(data));
-    //             flights.push(data);
-    //             console.log('agrega', flights.length);
-    //         });
-    //     console.log('FINALIZA');
-    // }
-    // private initializeData() {
-    //     fs.readFile(PATH_FILE, 'utf8', (err,data) => {
-    //         const dataSplited: string[] = data.split('\n');
-    //         for (let index = 0; index < dataSplited.length; index++) {
-    //             const element = dataSplited[index];
-    //             flights.push(element);
-    //             console.log('agrega');
-    //         }
-    //     });
-    // }
     public getAirline(req: Request, res: Response): void{
         let counter: number = 0;
         try {
@@ -90,6 +68,27 @@ class AirlineController {
             }
             res.status(200).send({counter: String(counter), node: process.env.HOSTNAME});
         } catch (error) {
+            const errorMsg = error as Error;
+            console.log('ERROR ', errorMsg.message);
+        }
+    }
+
+    public getAnalytics(req: Request, res: Response): void {
+        try {
+            const analytics = flightsAndPassengers(flights);
+            
+            res.status(200).send(`
+            <h1>Visualizations - node ${process.env.HOSTNAME}</h1>
+            <canvas id="myChart"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                var ctx = document.getElementById('myChart');
+                new Chart(ctx, ${JSON.stringify(
+        analytics
+    )});
+            </script>
+        `);
+        }catch (error) {
             const errorMsg = error as Error;
             console.log('ERROR ', errorMsg.message);
         }

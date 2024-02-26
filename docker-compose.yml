@@ -17,7 +17,7 @@ services:
         delay: 1s
     ports:
       - :3002
-    mem_limit: 2000m
+    mem_limit: 200m
     volumes:
       - .:/app 
       - node_modules:/app/node_modules/

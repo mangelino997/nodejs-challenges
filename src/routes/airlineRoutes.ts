@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import airlineController from '../controllers/airlineController';
 
-
 class AirlineRouter {
     public router: Router;
     constructor() {
@@ -11,6 +10,7 @@ class AirlineRouter {
 
     private initializeRoutes() {
         this.router.get('', airlineController.getAirline);
+        this.router.get('/visualizations', airlineController.getAnalytics);
     }
 }
 
